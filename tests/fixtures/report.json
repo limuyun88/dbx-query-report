@@ -1,0 +1,44 @@
+{
+  "title": "模拟地区月度销售与商品榜",
+  "source": "测试用虚构数据",
+  "period": "2026-01-01（含）至2026-03-01（不含）",
+  "definition": "销售额为模拟字段 quantity × unit_price；有效记录状态由测试定义。NULL 保留为空，不与零混同。",
+  "executed": true,
+  "complete": true,
+  "sql": [
+    "/* 测试 SQL；仅用于模拟数据，不访问数据库。 */ SELECT period, COUNT(DISTINCT customer_key) AS customer_count, SUM(quantity * unit_price) AS sales FROM demo_sales GROUP BY period;",
+    "/* 测试 SQL；每月独立排名。 */ SELECT period, product_name, sales FROM demo_monthly_rank WHERE rank_no <= 10;"
+  ],
+  "datasets": [
+    {
+      "title": "月度汇总",
+      "columns": [
+        {"key": "month", "label": "月份", "type": "text"},
+        {"key": "customers", "label": "活跃客户数", "type": "integer"},
+        {"key": "sales", "label": "销售额", "type": "decimal"},
+        {"key": "growth", "label": "环比", "type": "percent"}
+      ],
+      "rows": [
+        {"month": "2026-01", "customers": "12", "sales": "1000.25", "growth": null},
+        {"month": "2026-02", "customers": "11", "sales": "850.10", "growth": "-0.1501124719"}
+      ],
+      "chart": {"category": "month", "value": "sales"},
+      "note": "客户数为各月去重结果，不能跨月直接相加。"
+    },
+    {
+      "title": "商品月榜",
+      "columns": [
+        {"key": "month", "label": "月份", "type": "text"},
+        {"key": "rank", "label": "排名", "type": "integer"},
+        {"key": "name", "label": "商品名称", "type": "text"},
+        {"key": "sales", "label": "销售额", "type": "decimal"}
+      ],
+      "rows": [
+        {"month": "2026-01", "rank": 1, "name": "示例商品甲", "sales": "60.20"},
+        {"month": "2026-02", "rank": 1, "name": "示例商品乙", "sales": "52.05"}
+      ],
+      "chart": {"category": "name", "value": "sales", "group": "month"},
+      "note": "每月独立排名，榜单只包含模拟前十结果。"
+    }
+  ]
+}

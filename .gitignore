@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+demo-output/
+_review/
+acceptance-output/
+_制作与校验/
+*.xlsx
+*.html
+*.sql
+*.jsonl
+*.log
